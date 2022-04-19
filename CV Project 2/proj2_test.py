@@ -1,7 +1,6 @@
 import pandas as pd
 import argparse
 import tensorflow as tf
-import numpy as np
 
 
 def load_model_weights(model, weights=None):
@@ -22,8 +21,8 @@ def get_images_labels(df, classes, img_height, img_width):
         images.append(image)
         labels.append(label)
 
-    images = np.array(images)
-    labels = np.array(labels)
+    images = tf.stack(images)
+    labels = tf.stack(labels)
 
     # Convert the lists into a dataset
     dataset = tf.data.Dataset.from_tensor_slices((images, labels))
@@ -56,10 +55,9 @@ def main():
 
     args = parser.parse_args()
     model = args.model
-    weights = args.weights
     test_csv = args.test_csv
 
-    test_df = pd.read_csv(test_csv, delimiter=', ')
+    test_df = pd.read_csv(test_csv, skipinitialspace=True)
     classes = ['astilbe', 'bellflower', 'black-eyed susan', 'calendula', 'california poppy',
                'carnation', 'common daisy', 'coreopsis', 'dandelion', 'iris', 'rose', 'sunflower', 'tulip']
 

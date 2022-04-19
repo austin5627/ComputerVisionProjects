@@ -1,7 +1,5 @@
 import tensorflow as tf
-from matplotlib import pyplot as plt
 import argparse
-import numpy as np
 
 BATCH_SIZE = 32
 IMAGE_SIZE = (160, 160)
@@ -111,21 +109,6 @@ def train(train_dataset, validation_dataset, model_file):
 
     # Save model
     model.save(model_file)
-
-
-def test_model(model, validation_dataset, class_names):
-
-    # Pick 9 images from validation set and get their predictions
-    validation_images, validation_labels = validation_dataset.as_numpy_iterator().next()
-    predictions = model.predict(validation_images)
-
-    # Plot predictions in 3x3 grid
-    fig, axes = plt.subplots(3, 3, figsize=(12, 12))
-    for i, ax in enumerate(axes.flat):
-        ax.imshow(validation_images[i].astype(np.uint8))
-        ax.set_title(f"Real: {class_names[validation_labels[i]]}, Predicted: {class_names[np.argmax(predictions[i])]}")
-        ax.axis("off")
-    plt.show()
 
 
 def main():
