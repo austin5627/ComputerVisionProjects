@@ -1,5 +1,6 @@
 import tensorflow as tf
 from matplotlib import pyplot as plt
+import argparse
 import numpy as np
 
 BATCH_SIZE = 32
@@ -61,7 +62,7 @@ def create_model(base_model):
     return model
 
 
-def train(train_dataset, validation_dataset):
+def train(train_dataset, validation_dataset, model_file):
 
     base_model = tf.keras.applications.MobileNetV2(
         input_shape=IMAGE_SHAPE,
@@ -108,8 +109,8 @@ def train(train_dataset, validation_dataset):
         validation_data=validation_dataset,
     )
 
-    # Save model as model.h5
-    model.save("model.h5")
+    # Save model
+    model.save(model_file)
 
 
 def test_model(model, validation_dataset, class_names):
@@ -128,12 +129,17 @@ def test_model(model, validation_dataset, class_names):
 
 
 def main():
-    data_dir = './flowers/'
+    # Data directory, model
+    parser = argparse.ArgumentParser(description="Transfer Learning Test")
+    parser.add_argument("--data_dir", type=str, default="./flowers/", help="Data directory")
+    parser.add_argument("--model_file", type=str, default="model.h5", help="Name of saved model file")
+
+    args = parser.parse_args()
+    data_dir = args.data_dir
+    model_file = args.model_file
+
     train_dataset, validation_dataset, class_names = load_data(data_dir)
-    # if tf.keras.models.load_model("model.h5"):
-    #     model = tf.keras.models.load_model("model.h5")
-    #     test_model(model, validation_dataset, class_names)
-    train(train_dataset, validation_dataset)
+    train(train_dataset, validation_dataset, model_file)
 
 
 if __name__ == "__main__":

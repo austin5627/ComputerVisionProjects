@@ -211,6 +211,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-./flowers/**
-./flowers_test/**
-./flowers_test.csv
+# ignore flowers dir
+flowers/
+flowers_test/
