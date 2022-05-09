@@ -112,7 +112,6 @@ def train(train_dataset, validation_dataset, model_file):
 
 
 def main():
-    # Data directory, model
     parser = argparse.ArgumentParser(description="Transfer Learning Test")
     parser.add_argument("--data_dir", type=str, default="./flowers/", help="Data directory")
     parser.add_argument("--model_file", type=str, default="model.h5", help="Name of saved model file")
