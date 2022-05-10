@@ -131,7 +131,7 @@ def process_image(file):
 
     # draw_contours(edge, masked)
 
-    check = get_contour(mask)
+    check = get_contour(edge)
     angle = getOrientation(check, image) / math.pi * 180
     if abs(angle) > 45 and conf < .1:
         image = imutils.rotate_bound(image, degrees)
